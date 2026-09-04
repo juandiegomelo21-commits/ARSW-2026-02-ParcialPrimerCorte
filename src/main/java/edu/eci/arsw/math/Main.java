@@ -5,16 +5,35 @@
  */
 package edu.eci.arsw.math;
 
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  *
  * @author hcadavid      System.out.println(bytesToHex(PiDigits.getDigits(1, 1000000)));
  */
 public class Main {
-    public static void main(String[] a) {
-        CalcularDigitosThread calcularDigitosThread = new CalcularDigitosThread(0, 10);
-        calcularDigitosThread.start();
 
-        System.out.println(bytesToHex(PiDigits.getDigits(0, 10)));
+    private static ArrayList<CalcularDigitosThread> Hilos;
+    public static void main(String[] a) throws InterruptedException {
+
+        Hilos = new ArrayList<>();
+        int numeroHilos = 12;
+        for (int i = 0; i < numeroHilos; i++){
+         CalcularDigitosThread calcularDigitosThread = new CalcularDigitosThread(0, i);
+         Hilos.add(calcularDigitosThread);
+        }
+
+        for (CalcularDigitosThread C : Hilos){
+            C.start();
+        }
+
+
+        for (CalcularDigitosThread C : Hilos){
+            C.join();
+        }
+
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();

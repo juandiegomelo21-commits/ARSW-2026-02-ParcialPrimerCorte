@@ -11,9 +11,6 @@ public class CalcularDigitosThread extends Thread {
     private final int start;
     private final int count;
 
-    private byte [] numero;
-    private String bytesToHex;
-
 
     public CalcularDigitosThread(int start, int count){
         this.start=start;
@@ -23,11 +20,11 @@ public class CalcularDigitosThread extends Thread {
 
     @Override
     public void run(){
-        numero = PiDigits.getDigits(start, count);
+        byte[] numero = PiDigits.getDigits(start, count);
         /**
         "System.out.println(Arrays.toString(numero));"
          */
-        bytesToHex=bytesToHex(numero);
+        String bytesToHex = bytesToHex(numero);
         System.out.println(bytesToHex);
 
     }
